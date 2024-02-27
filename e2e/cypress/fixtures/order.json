@@ -1,0 +1,17 @@
+{
+  "name": "Test User",
+  "burgers": [
+    {
+      "type": "medium",
+      "isGlutenFree": "false",
+      "side": "fries",
+      "toppings": ["lettuce", "onions"]
+    },
+    {
+      "type": "chicken",
+      "isGlutenFree": "true",
+      "side": "veggies",
+      "toppings": [""]
+    }
+  ]
+}

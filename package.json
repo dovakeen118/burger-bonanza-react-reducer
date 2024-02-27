@@ -1,0 +1,21 @@
+{
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client",
+    "e2e"
+  ],
+  "scripts": {
+    "build:client": "yarn workspace burger-bonanza-react-reducer-client build",
+    "start": "yarn workspace burger-bonanza-react-reducer-server start",
+    "dev": "yarn workspace burger-bonanza-react-reducer-server dev",
+    "dev:debug": "yarn workspace burger-bonanza-react-reducer-server dev:debug",
+    "dev:cypress": "yarn workspace burger-bonanza-react-reducer-server dev:e2e",
+    "e2e:open": "yarn workspace burger-bonanza-react-reducer-e2e e2e:open",
+    "e2e:run": "yarn workspace burger-bonanza-react-reducer-e2e e2e:run"
+  },
+  "engines": {
+    "node": "^16.18"
+  }
+}
