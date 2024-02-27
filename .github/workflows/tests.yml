@@ -10,7 +10,6 @@ jobs:
           node-version: '16.18'
       - name: Install modules
         run: yarn install
-      - name: Navigate to server directory
-        run: cd server
       - name: Run Jest tests
         run: yarn test
+        working-directory: server
