@@ -1,0 +1,16 @@
+name: Tests CI
+on:   [push, pull_request]
+jobs:
+  jest-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '16.18'
+      - name: Install modules
+        run: yarn install
+      - name: Navigate to server directory
+        run: cd server
+      - name: Run Jest tests
+        run: yarn test
