@@ -1,26 +1,14 @@
 name: Tests CI
 on:   [push, pull_request]
 jobs:
-  jest-tests:
+  tests:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '16.18'
-      - name: Install modules
-        run: yarn install
-      - name: Run Jest tests
-        working-directory: server
-        run: yarn run test
-
-  cypress-tests:
-    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/burger-bonanza-react-reducer_e2e
     services:
       postgres:
         image: postgres
         env:
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/burger-bonanza-react-reducer_e2e
           POSTGRES_DB: burger-bonanza-react-reducer_e2e
           POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
@@ -31,22 +19,29 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '16.18'
-      - name: Install modules
-        run: yarn install
 
       - name: Create Postgres DB
         working-directory: server
-        run: createdb burger-bonanza-react-reducer_e2e --host=127.0.0.1 --username=postgres password=postgres
+        run: createdb burger-bonanza-react-reducer_e2e --host=127.0.0.1 --username=postgres
+
+      - name: Install modules
+        run: yarn install
+
       - name: Migrate e2e database
         working-directory: server
         run: NODE_ENV=e2e yarn run db:e2e:migrate
 
-      - name: Run Cypress
+      - name: Run Jest tests
+        working-directory: server
+        run: yarn run test
+
+      - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
           start: yarn run dev:e2e
