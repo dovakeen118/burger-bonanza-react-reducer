@@ -44,6 +44,5 @@ jobs:
         with:
           start: yarn run dev:cypress
           browser: chrome
-          headed: false
-          wait-on: "http://localhost:3000"
+          wait-on: "http://127.0.0.1:8765"
           command: yarn run e2e:run
