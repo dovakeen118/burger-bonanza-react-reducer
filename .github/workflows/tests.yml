@@ -42,6 +42,5 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           start: yarn run dev:cypress
-          browser: chrome
           wait-on: "http://127.0.0.1:8765"
           command: yarn run e2e:run
