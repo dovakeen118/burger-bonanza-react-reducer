@@ -28,7 +28,7 @@ jobs:
 
       - name: Create Postgres DB
         working-directory: server
-        run: createdb burger-bonanza-react-reducer_e2e --host=127.0.0.1 --username=postgres
+        run: createdb burger-bonanza-react-reducer_e2e --host=127.0.0.1 --username=postgres -w
 
       - name: Install modules
         run: yarn install
