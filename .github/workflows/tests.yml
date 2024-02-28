@@ -31,19 +31,19 @@ jobs:
       - name: Install modules
         run: yarn install
 
+      - name: Run Jest tests
+        working-directory: server
+        run: yarn run test
+      
       - name: Migrate e2e database
         working-directory: server
         run: NODE_ENV=e2e yarn run db:e2e:migrate
 
-      - name: Run Jest tests
-        working-directory: server
-        run: yarn run test
-
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          start: yarn run dev:e2e
+          start: yarn run dev:cypress
           browser: chrome
-          headless: true
+          headed: false
           wait-on: "http://localhost:3000"
           command: yarn run e2e:run
