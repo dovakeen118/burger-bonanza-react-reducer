@@ -23,6 +23,8 @@ jobs:
         image: postgres
         env:
           POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: burger-bonanza-react-reducer_e2e
         ports:
           - 5432:5432
         options: >-
@@ -35,14 +37,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '16.18'
-      
       - name: Install modules
         run: yarn install
-      
+
+      - name: Create Postgres DB
+        working-directory: server
+        run: createdb burger-bonanza-react-reducer_e2e --host=127.0.0.1 --username=postgres --password=postgres
       - name: Migrate e2e database
         working-directory: server
         run: NODE_ENV=e2e yarn run db:e2e:migrate
-      
+
       - name: Run Cypress
         uses: cypress-io/github-action@v6
         with:
