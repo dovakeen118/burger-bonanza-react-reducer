@@ -28,9 +28,6 @@ jobs:
         with:
           node-version: '16.18'
 
-      - name: Create Postgres DB
-        run: createdb burger-bonanza-react-reducer_e2e --host=127.0.0.1 --username=postgres password=postgres
-
       - name: Install modules
         run: yarn install
 
