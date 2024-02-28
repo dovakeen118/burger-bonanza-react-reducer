@@ -11,6 +11,7 @@ jobs:
       postgres:
         image: postgres
         env:
+          POSTGRES_DB: burger-bonanza-react-reducer_e2e
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
