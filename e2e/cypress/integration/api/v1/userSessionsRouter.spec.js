@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import userJson from "../../fixtures/user.json";
+import userJson from "../../../fixtures/user.json";
 
 describe("userSessionsRouter", () => {
   beforeEach(() => {
