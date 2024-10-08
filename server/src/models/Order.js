@@ -1,8 +1,8 @@
-const Model = require("./Model")
+const Model = require("./Model");
 
 class Order extends Model {
   static get tableName() {
-    return "orders"
+    return "orders";
   }
 
   static get jsonSchema() {
@@ -10,24 +10,24 @@ class Order extends Model {
       type: "object",
       required: ["name"],
       properties: {
-        name: { type: "string" }
-      }
-    }
+        name: { type: "string" },
+      },
+    };
   }
 
   static get relationMappings() {
-    const { Burger } = require("./index")
+    const { Burger } = require("./index");
     return {
       burgers: {
         relation: Model.HasManyRelation,
         modelClass: Burger,
         join: {
           from: "orders.id",
-          to: "burgers.orderId"
-        }
-      }
-    }
+          to: "burgers.orderId",
+        },
+      },
+    };
   }
 }
 
-module.exports = Order
+module.exports = Order;

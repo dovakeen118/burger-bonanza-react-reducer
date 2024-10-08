@@ -3,15 +3,15 @@
   "burgers": [
     {
       "type": "medium",
-      "isGlutenFree": "false",
+      "isGlutenFree": false,
       "side": "fries",
-      "toppings": ["lettuce", "onions"]
+      "toppings": "lettuce, onions"
     },
     {
       "type": "chicken",
-      "isGlutenFree": "true",
+      "isGlutenFree": true,
       "side": "veggies",
-      "toppings": [""]
+      "toppings": ""
     }
   ]
 }

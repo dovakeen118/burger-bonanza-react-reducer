@@ -6,6 +6,25 @@ import cleanUserInput from "../../../services/cleanUserInput.js";
 
 const ordersRouter = new express.Router();
 
+ordersRouter.get("/", async (req, res) => {
+  try {
+    const orders = await Order.query().orderBy("createdAt");
+    return res.status(200).json({ orders });
+  } catch (err) {
+    return res.status(500).json({ errors: err.data });
+  }
+});
+
+ordersRouter.get("/:id", async (req, res) => {
+  try {
+    const order = await Order.query().findById(req.params.id);
+    order.burgers = await order.$relatedQuery("burgers");
+    return res.status(200).json({ order });
+  } catch (err) {
+    return res.status(401).json({ err: err.data });
+  }
+});
+
 ordersRouter.post("/", async (req, res) => {
   const name = req.body.order.name;
   const cleanedOrderName = cleanUserInput({ name });
@@ -16,12 +35,11 @@ ordersRouter.post("/", async (req, res) => {
       for (const burger of burgers) {
         const cleanedBurger = cleanUserInput({
           type: burger.type,
-          isGlutenFree: burger.isGlutenFree,
           side: burger.side,
         });
-        await order
-          .$relatedQuery("burgers", trx)
-          .insert({ ...cleanedBurger, toppings: burger.toppings.join(", ") });
+        const toppings =
+          typeof burger.toppings !== "string" ? burger.toppings.join(", ") : burger.toppings;
+        await order.$relatedQuery("burgers", trx).insert({ ...cleanedBurger, toppings });
       }
       return order;
     });

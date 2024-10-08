@@ -1,0 +1,11 @@
+{
+  "name": "Test User 2",
+  "burgers": [
+    {
+      "type": "well done",
+      "isGlutenFree": false,
+      "side": "salad",
+      "toppings": "lettuce"
+    }
+  ]
+}

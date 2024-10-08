@@ -6,8 +6,7 @@ describe("As a user adding a new burger order", () => {
   };
 
   before(() => {
-    cy.task("db:truncate", "Burger");
-    cy.task("db:truncate", "Order");
+    cy.task("db:truncate", ["Burger", "Order"]);
   });
 
   describe("when valid burger is provided", () => {
