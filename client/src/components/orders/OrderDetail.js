@@ -1,19 +1,33 @@
 import React, { useEffect, useState } from "react";
 
 import getOrder from "../../apiClient/getOrder";
+import patchOrder from "../../apiClient/patchOrder";
 
 const OrderDetail = (props) => {
+  const orderId = props.match.params.id;
   const [order, setOrder] = useState({ burgers: [] });
 
   const findOrder = async () => {
-    const id = props.match.params.id;
-    const orderData = await getOrder(id);
+    const orderData = await getOrder(orderId);
     setOrder(orderData);
   };
 
   useEffect(() => {
     findOrder();
   }, []);
+
+  const handleCompleteOrder = async () => {
+    const updatedOrder = await patchOrder({ orderId, data: { isFulfilled: true } });
+    setOrder(updatedOrder);
+  };
+
+  const completeButton = (
+    <button type="button" className="button" id="complete-button" onClick={handleCompleteOrder}>
+      Complete Order
+    </button>
+  );
+
+  const calloutBackground = order.isFulfilled ? "primary" : "alert";
 
   const orderBurgers = order.burgers.map((burger) => {
     return (
@@ -37,7 +51,9 @@ const OrderDetail = (props) => {
   return (
     <div className="grid-container">
       <h1 className="text-center">Order for {order.name}</h1>
-      <div className="callout primary" id="burger-list">
+      {order.isFulfilled ? <h4>Complete</h4> : completeButton}
+
+      <div className={`callout ${calloutBackground}`} id="burger-list">
         {orderBurgers}
       </div>
     </div>

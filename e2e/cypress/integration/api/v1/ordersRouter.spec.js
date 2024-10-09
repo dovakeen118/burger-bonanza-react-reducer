@@ -184,4 +184,55 @@ describe("ordersRouter", () => {
       });
     });
   });
+
+  describe("PATCH /orders/:id", () => {
+    let orderId;
+
+    beforeEach(() => {
+      cy.task("db:truncate", ["Burger", "Order"]);
+      cy.task("db:insert", { modelName: "Order", json: orderJson });
+
+      cy.task("db:find", {
+        modelName: "Order",
+        conditions: { name: orderJson.name },
+      }).then((foundOrder) => {
+        orderId = foundOrder[0].id;
+      });
+    });
+
+    context("when all fields are provided", () => {
+      it("has a successful status code", () => {
+        cy.request({
+          method: "PATCH",
+          url: `/api/v1/orders/${orderId}`,
+          body: { isFulfilled: true },
+        })
+          .its("status")
+          .should("equal", 200);
+      });
+
+      it("has a JSON response type", () => {
+        cy.request({
+          method: "PATCH",
+          url: `/api/v1/orders/${orderId}`,
+          body: { isFulfilled: true },
+        })
+          .its("headers")
+          .its("content-type")
+          .should("include", "application/json");
+      });
+
+      it("returns the newly persisted order", () => {
+        cy.request({
+          method: "PATCH",
+          url: `/api/v1/orders/${orderId}`,
+          body: { isFulfilled: true },
+        }).should((response) => {
+          expect(response.body.order).to.have.property("name", orderJson.name);
+          expect(response.body.order).to.have.property("isFulfilled", true);
+          expect(response.body.order.burgers.length).to.equal(orderJson.burgers.length);
+        });
+      });
+    });
+  });
 });

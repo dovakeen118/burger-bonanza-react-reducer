@@ -33,4 +33,9 @@ describe("As a user viewing details about an Order", () => {
     );
     cy.get("#burger-list > :nth-child(2)").contains(orderJson.burgers[1].side);
   });
+
+  it("should display whether the order has been completed", () => {
+    cy.contains("Complete Order").click();
+    cy.get("h4").contains("Complete");
+  });
 });
