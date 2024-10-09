@@ -33,14 +33,14 @@ const OrderList = (props) => {
 
       <div className="grid-x grid-margin-x">
         <div className="cell medium-6 callout">
-          <h3 className="text-center">Incomplete Orders</h3>
+          <h3 className="text-center">Incomplete Orders ({orders.incomplete.length})</h3>
           <div className="callout alert" id="incomplete-order-list">
             {incompleteOrderList}
           </div>
         </div>
 
         <div className="cell medium-6 callout">
-          <h3 className="text-center">Complete Orders</h3>
+          <h3 className="text-center">Complete Orders ({orders.complete.length})</h3>
           <div className="callout primary" id="complete-order-list">
             {completeOrderList}
           </div>

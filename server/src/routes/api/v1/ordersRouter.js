@@ -8,10 +8,10 @@ const ordersRouter = new express.Router();
 
 ordersRouter.get("/", async (req, res) => {
   try {
-    const completeOrders = await Order.query().where({ isFulfilled: true }).orderBy("createdAt");
-    const incompleteOrders = await Order.query()
-      .where({ isFulfilled: false })
+    const completeOrders = await Order.query()
+      .where({ isFulfilled: true })
       .orderBy("createdAt", "desc");
+    const incompleteOrders = await Order.query().where({ isFulfilled: false }).orderBy("createdAt");
     return res.status(200).json({ completeOrders, incompleteOrders });
   } catch (err) {
     return res.status(500).json({ errors: err.data });
@@ -48,6 +48,20 @@ ordersRouter.post("/", async (req, res) => {
     });
     createdOrder.burgers = await createdOrder.$relatedQuery("burgers");
     return res.status(201).json({ order: createdOrder });
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      return res.status(422).json({ errors: err.data });
+    }
+    return res.status(500).json({ errors: err });
+  }
+});
+
+ordersRouter.patch("/:id", async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const updatedOrder = await Order.query().patchAndFetchById(orderId, req.body);
+    updatedOrder.burgers = await updatedOrder.$relatedQuery("burgers");
+    return res.status(200).json({ order: updatedOrder });
   } catch (err) {
     if (err instanceof ValidationError) {
       return res.status(422).json({ errors: err.data });
