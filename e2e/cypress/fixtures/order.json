@@ -1,5 +1,6 @@
 {
   "name": "Test User",
+  "isFulfilled": false,
   "burgers": [
     {
       "type": "medium",

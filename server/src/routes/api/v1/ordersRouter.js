@@ -8,8 +8,11 @@ const ordersRouter = new express.Router();
 
 ordersRouter.get("/", async (req, res) => {
   try {
-    const orders = await Order.query().orderBy("createdAt");
-    return res.status(200).json({ orders });
+    const completeOrders = await Order.query().where({ isFulfilled: true }).orderBy("createdAt");
+    const incompleteOrders = await Order.query()
+      .where({ isFulfilled: false })
+      .orderBy("createdAt", "desc");
+    return res.status(200).json({ completeOrders, incompleteOrders });
   } catch (err) {
     return res.status(500).json({ errors: err.data });
   }

@@ -11,27 +11,55 @@ describe("As a user viewing the list of Orders", () => {
     cy.visit("/orders");
   });
 
-  it("should display the Order name for each order", () => {
-    cy.get("#order-list").children().should("have.length", 2);
+  context("incomplete orders", () => {
+    it("should display the Order name for each order", () => {
+      cy.get("#incomplete-order-list").children().should("have.length", 1);
 
-    cy.get("#order-list > :nth-child(1)").contains(orderJson.name);
-    cy.get("#order-list > :nth-child(2)").contains(order2Json.name);
-  });
-
-  describe("there is a clickable link for each Order", () => {
-    let orderId;
-    beforeEach(() => {
-      cy.task("db:find", {
-        modelName: "Order",
-        conditions: { name: orderJson.name },
-      }).then((orderData) => {
-        orderId = orderData[0].id;
-      });
+      cy.get("#incomplete-order-list > :nth-child(1)").contains(orderJson.name);
+      cy.get("#incomplete-order-list > :nth-child(1)").contains("Pending");
     });
 
-    it("should navigate to the details page of the Order", () => {
-      cy.get("#order-list > :nth-child(1)").contains(orderJson.name).click();
-      cy.url().should("include", `/orders/${orderId}`);
+    describe("there is a clickable link for each Order", () => {
+      let orderId;
+      beforeEach(() => {
+        cy.task("db:find", {
+          modelName: "Order",
+          conditions: { name: orderJson.name },
+        }).then((orderData) => {
+          orderId = orderData[0].id;
+        });
+      });
+
+      it("should navigate to the details page of the Order", () => {
+        cy.get("#incomplete-order-list > :nth-child(1)").contains(orderJson.name).click();
+        cy.url().should("include", `/orders/${orderId}`);
+      });
+    });
+  });
+
+  context("complete orders", () => {
+    it("should display the Order name for each order", () => {
+      cy.get("#complete-order-list").children().should("have.length", 1);
+
+      cy.get("#complete-order-list > :nth-child(1)").contains(order2Json.name);
+      cy.get("#complete-order-list > :nth-child(1)").contains("Complete");
+    });
+
+    describe("there is a clickable link for each Order", () => {
+      let orderId;
+      beforeEach(() => {
+        cy.task("db:find", {
+          modelName: "Order",
+          conditions: { name: order2Json.name },
+        }).then((orderData) => {
+          orderId = orderData[0].id;
+        });
+      });
+
+      it("should navigate to the details page of the Order", () => {
+        cy.get("#complete-order-list > :nth-child(1)").contains(order2Json.name).click();
+        cy.url().should("include", `/orders/${orderId}`);
+      });
     });
   });
 });

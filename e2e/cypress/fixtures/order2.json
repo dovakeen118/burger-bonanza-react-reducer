@@ -1,5 +1,6 @@
 {
   "name": "Test User 2",
+  "isFulfilled": true,
   "burgers": [
     {
       "type": "well done",
