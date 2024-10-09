@@ -22,10 +22,12 @@ const OrderDetail = (props) => {
   };
 
   const completeButton = (
-    <button type="button" className="button" onClick={handleCompleteOrder}>
+    <button type="button" className="button" id="complete-button" onClick={handleCompleteOrder}>
       Complete Order
     </button>
   );
+
+  const calloutBackground = order.isFulfilled ? "primary" : "alert";
 
   const orderBurgers = order.burgers.map((burger) => {
     return (
@@ -49,9 +51,9 @@ const OrderDetail = (props) => {
   return (
     <div className="grid-container">
       <h1 className="text-center">Order for {order.name}</h1>
-      {order.isFulfilled ? "Complete" : completeButton}
+      {order.isFulfilled ? <h4>Complete</h4> : completeButton}
 
-      <div className="callout primary" id="burger-list">
+      <div className={`callout ${calloutBackground}`} id="burger-list">
         {orderBurgers}
       </div>
     </div>
