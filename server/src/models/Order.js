@@ -11,6 +11,7 @@ class Order extends Model {
       required: ["name"],
       properties: {
         name: { type: "string" },
+        isFulfilled: { type: ["boolean", "string"] },
       },
     };
   }

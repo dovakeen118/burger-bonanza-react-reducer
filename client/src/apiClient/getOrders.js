@@ -5,7 +5,10 @@ const getOrders = async () => {
       throw new Error(`${response.status} (${response.statusText})`);
     }
     const responseBody = await response.json();
-    return responseBody.orders;
+    return {
+      completeOrders: responseBody.completeOrders,
+      incompleteOrders: responseBody.incompleteOrders,
+    };
   } catch (err) {
     console.error("Error in getOrders fetch: ", err);
   }

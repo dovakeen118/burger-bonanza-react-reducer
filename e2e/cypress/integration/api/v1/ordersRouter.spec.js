@@ -23,9 +23,11 @@ describe("ordersRouter", () => {
 
     it("returns all orders", () => {
       cy.request("/api/v1/orders").should((response) => {
-        expect(response.body.orders.length).to.equal(2);
-        expect(response.body.orders[0].name).to.equal(orderJson.name);
-        expect(response.body.orders[1].name).to.equal(order2Json.name);
+        expect(response.body.completeOrders.length).to.equal(1);
+        expect(response.body.completeOrders[0].name).to.equal(order2Json.name);
+
+        expect(response.body.incompleteOrders.length).to.equal(1);
+        expect(response.body.incompleteOrders[0].name).to.equal(orderJson.name);
       });
     });
   });

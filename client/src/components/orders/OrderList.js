@@ -5,18 +5,25 @@ import getOrders from "../../apiClient/getOrders";
 import OrderListTile from "./OrderListTile";
 
 const OrderList = (props) => {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState({ complete: [], incomplete: [] });
 
   const getAllOrders = async () => {
     const orderData = await getOrders();
-    setOrders(orderData);
+    setOrders({
+      complete: orderData.completeOrders,
+      incomplete: orderData.incompleteOrders,
+    });
   };
 
   useEffect(() => {
     getAllOrders();
   }, []);
 
-  const orderList = orders.map((order) => {
+  const completeOrderList = orders.complete.map((order) => {
+    return <OrderListTile key={order.id} {...order} />;
+  });
+
+  const incompleteOrderList = orders.incomplete.map((order) => {
     return <OrderListTile key={order.id} {...order} />;
   });
 
@@ -24,8 +31,20 @@ const OrderList = (props) => {
     <div className="grid-container">
       <h1 className="text-center">Orders</h1>
 
-      <div className="callout primary" id="order-list">
-        {orderList}
+      <div className="grid-x grid-margin-x">
+        <div className="cell medium-6 callout">
+          <h3 className="text-center">Incomplete Orders</h3>
+          <div className="callout alert" id="incomplete-order-list">
+            {incompleteOrderList}
+          </div>
+        </div>
+
+        <div className="cell medium-6 callout">
+          <h3 className="text-center">Complete Orders</h3>
+          <div className="callout primary" id="complete-order-list">
+            {completeOrderList}
+          </div>
+        </div>
       </div>
     </div>
   );
