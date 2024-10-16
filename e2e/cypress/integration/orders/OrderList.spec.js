@@ -16,7 +16,7 @@ describe("As a user viewing the list of Orders", () => {
       cy.get("#incomplete-order-list").children().should("have.length", 1);
 
       cy.get("#incomplete-order-list > :nth-child(1)").contains(orderJson.name);
-      cy.get("#incomplete-order-list > :nth-child(1)").contains("Pending");
+      cy.get("#incomplete-order-list > :nth-child(1)").contains("Currently pending...");
     });
 
     describe("there is a clickable link for each Order", () => {
@@ -42,7 +42,7 @@ describe("As a user viewing the list of Orders", () => {
       cy.get("#complete-order-list").children().should("have.length", 1);
 
       cy.get("#complete-order-list > :nth-child(1)").contains(order2Json.name);
-      cy.get("#complete-order-list > :nth-child(1)").contains("Complete");
+      cy.get("#complete-order-list > :nth-child(1)").contains("Fulfillment time");
     });
 
     describe("there is a clickable link for each Order", () => {

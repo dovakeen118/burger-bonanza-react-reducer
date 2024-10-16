@@ -32,8 +32,9 @@ const App = (props) => {
     <Router>
       <TopBar user={currentUser} />
       <Switch>
-        <Route exact path="/" component={BurgerOrder} />
+        <Route exact path="/" component={OrderList} />
         <Route exact path="/orders" component={OrderList} />
+        <Route exact path="/orders/new" component={BurgerOrder} />
         <Route exact path="/orders/:id" component={OrderDetail} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />

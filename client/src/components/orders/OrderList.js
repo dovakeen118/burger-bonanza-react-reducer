@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import getOrders from "../../apiClient/getOrders";
 
-import OrderListTile from "./OrderListTile";
+import OrderListCompleteTile from "./OrderListCompleteTile";
+import OrderListIncompleteTile from "./OrderListIncompleteTile";
 
-const OrderList = (props) => {
+const OrderList = () => {
   const [orders, setOrders] = useState({ complete: [], incomplete: [] });
 
   const getAllOrders = async () => {
@@ -20,11 +21,11 @@ const OrderList = (props) => {
   }, []);
 
   const completeOrderList = orders.complete.map((order) => {
-    return <OrderListTile key={order.id} {...order} />;
+    return <OrderListCompleteTile key={order.id} {...order} />;
   });
 
   const incompleteOrderList = orders.incomplete.map((order) => {
-    return <OrderListTile key={order.id} {...order} />;
+    return <OrderListIncompleteTile key={order.id} {...order} />;
   });
 
   return (

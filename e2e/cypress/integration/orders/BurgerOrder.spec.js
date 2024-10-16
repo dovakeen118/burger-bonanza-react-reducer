@@ -2,7 +2,7 @@
 
 describe("As a user adding a new burger order", () => {
   const visitOrderPage = () => {
-    cy.visit("/");
+    cy.visit("/orders/new");
   };
 
   before(() => {

@@ -205,7 +205,7 @@ describe("ordersRouter", () => {
         cy.request({
           method: "PATCH",
           url: `/api/v1/orders/${orderId}`,
-          body: { isFulfilled: true },
+          body: { status: "fulfilled" },
         })
           .its("status")
           .should("equal", 200);
@@ -215,21 +215,22 @@ describe("ordersRouter", () => {
         cy.request({
           method: "PATCH",
           url: `/api/v1/orders/${orderId}`,
-          body: { isFulfilled: true },
+          body: { status: "fulfilled" },
         })
           .its("headers")
           .its("content-type")
           .should("include", "application/json");
       });
 
-      it("returns the newly persisted order", () => {
+      it("returns the updated order", () => {
         cy.request({
           method: "PATCH",
           url: `/api/v1/orders/${orderId}`,
-          body: { isFulfilled: true },
+          body: { status: "fulfilled" },
         }).should((response) => {
           expect(response.body.order).to.have.property("name", orderJson.name);
-          expect(response.body.order).to.have.property("isFulfilled", true);
+          expect(response.body.order).to.have.property("status", "fulfilled");
+          expect(response.body.order).to.have.property("fulfilledAt");
           expect(response.body.order.burgers.length).to.equal(orderJson.burgers.length);
         });
       });

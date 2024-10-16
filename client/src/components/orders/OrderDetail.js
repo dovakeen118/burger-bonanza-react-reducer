@@ -3,9 +3,12 @@ import React, { useEffect, useState } from "react";
 import getOrder from "../../apiClient/getOrder";
 import patchOrder from "../../apiClient/patchOrder";
 
+import calculateDateTimeBetween from "../../services/calculateDateTimeBetween";
+
 const OrderDetail = (props) => {
   const orderId = props.match.params.id;
   const [order, setOrder] = useState({ burgers: [] });
+  const [timeDiff, setTimeDiff] = useState({});
 
   const findOrder = async () => {
     const orderData = await getOrder(orderId);
@@ -16,8 +19,16 @@ const OrderDetail = (props) => {
     findOrder();
   }, []);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimeDiff(calculateDateTimeBetween(order.createdAt));
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [order.createdAt]);
+
   const handleCompleteOrder = async () => {
-    const updatedOrder = await patchOrder({ orderId, data: { isFulfilled: true } });
+    const updatedOrder = await patchOrder({ orderId, data: { status: "fulfilled" } });
     setOrder(updatedOrder);
   };
 
@@ -26,8 +37,6 @@ const OrderDetail = (props) => {
       Complete Order
     </button>
   );
-
-  const calloutBackground = order.isFulfilled ? "primary" : "alert";
 
   const orderBurgers = order.burgers.map((burger) => {
     return (
@@ -48,10 +57,27 @@ const OrderDetail = (props) => {
     );
   });
 
+  const calloutBackground = order.status === "fulfilled" ? "primary" : "alert";
+
   return (
     <div className="grid-container">
       <h1 className="text-center">Order for {order.name}</h1>
-      {order.isFulfilled ? <h4>Complete</h4> : completeButton}
+      <div className="grid-x grid-x-margin">
+        {order.status === "fulfilled" ? (
+          <h4 className="callout success">Fulfilled</h4>
+        ) : (
+          <>
+            <p className="cell">
+              <strong>Currently pending...</strong>
+              {timeDiff.days ? `${timeDiff.days} days,` : null}{" "}
+              {timeDiff.hours ? `${timeDiff.hours} hours,` : null}{" "}
+              {timeDiff.mins ? `${timeDiff.mins} minutes,` : null}{" "}
+              {timeDiff.secs ? `${timeDiff.secs} seconds ago` : null}
+            </p>
+            {completeButton}
+          </>
+        )}
+      </div>
 
       <div className={`callout ${calloutBackground}`} id="burger-list">
         {orderBurgers}

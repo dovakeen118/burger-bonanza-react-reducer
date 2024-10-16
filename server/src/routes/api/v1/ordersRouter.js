@@ -9,9 +9,9 @@ const ordersRouter = new express.Router();
 ordersRouter.get("/", async (req, res) => {
   try {
     const completeOrders = await Order.query()
-      .where({ isFulfilled: true })
+      .where({ status: "fulfilled" })
       .orderBy("createdAt", "desc");
-    const incompleteOrders = await Order.query().where({ isFulfilled: false }).orderBy("createdAt");
+    const incompleteOrders = await Order.query().where({ status: "pending" }).orderBy("createdAt");
     return res.status(200).json({ completeOrders, incompleteOrders });
   } catch (err) {
     return res.status(500).json({ errors: err.data });
@@ -59,6 +59,14 @@ ordersRouter.post("/", async (req, res) => {
 ordersRouter.patch("/:id", async (req, res) => {
   try {
     const orderId = req.params.id;
+    if (req.body.status && req.body.status === "fulfilled") {
+      const updatedOrder = await Order.query().patchAndFetchById(orderId, {
+        status: "fulfilled",
+        fulfilledAt: new Date(),
+      });
+      updatedOrder.burgers = await updatedOrder.$relatedQuery("burgers");
+      return res.status(200).json({ order: updatedOrder });
+    }
     const updatedOrder = await Order.query().patchAndFetchById(orderId, req.body);
     updatedOrder.burgers = await updatedOrder.$relatedQuery("burgers");
     return res.status(200).json({ order: updatedOrder });
