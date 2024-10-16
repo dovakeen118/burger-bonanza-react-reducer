@@ -7,7 +7,7 @@
  */
 exports.up = async (knex) => {
   return knex.schema.table("orders", (table) => {
-    table.enum("status", ["pending", "processing", "fulfilled"]).notNullable().defaultTo("pending");
+    table.datetime("fulfilledAt");
   });
 };
 
@@ -16,6 +16,6 @@ exports.up = async (knex) => {
  */
 exports.down = async (knex) => {
   return knex.schema.table("orders", (table) => {
-    table.dropColumn("status");
+    table.dropColumn("fulfilledAt");
   });
 };

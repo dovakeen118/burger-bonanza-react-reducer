@@ -31,7 +31,10 @@ const TopBar = ({ user }) => {
             </Link>
           </li>
           <li>
-            <Link to="/orders">Orders</Link>
+            <Link to="/orders">View Orders</Link>
+          </li>
+          <li>
+            <Link to="/orders/new">Place Order</Link>
           </li>
         </ul>
       </div>

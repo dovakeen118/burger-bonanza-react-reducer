@@ -36,6 +36,6 @@ describe("As a user viewing details about an Order", () => {
 
   it("should display whether the order has been completed", () => {
     cy.contains("Complete Order").click();
-    cy.get("h4").contains("Complete");
+    cy.get("h4").contains("Fulfilled");
   });
 });
