@@ -7,7 +7,7 @@ const OrderListCompleteTile = ({ id, name, createdAt, fulfilledAt }) => {
   const timeDiff = createdAt && fulfilledAt ? calculateDateTimeBetween(createdAt, fulfilledAt) : {};
 
   return (
-    <div className="callout">
+    <div className="callout complete-order">
       <Link to={`/orders/${id}`}>
         <h4>
           Order #{id} for {name}

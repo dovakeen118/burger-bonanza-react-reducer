@@ -15,7 +15,7 @@ const OrderListIncompleteTile = ({ id, name, createdAt }) => {
   }, [createdAt]);
 
   return (
-    <div className="callout">
+    <div className="callout incomplete-order">
       <Link to={`/orders/${id}`}>
         <h4>
           Order #{id} for {name}
