@@ -45,7 +45,7 @@ const BurgerOrder = () => {
     <div className="grid-container">
       <h1 className="text-center">Place your order</h1>
       {orderConfirmation ? (
-        <h5 className="callout success">
+        <h5 className="callout order-confirmation">
           Your order has been placed!{" "}
           <Link to={`/orders/${orderConfirmation.confirmationNumber}`}>View here</Link>
         </h5>

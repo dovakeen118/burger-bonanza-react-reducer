@@ -30,19 +30,21 @@ const OrderList = () => {
 
   return (
     <div className="grid-container">
-      <h1 className="text-center">Orders</h1>
+      <h1 className="text-center">
+        <span className="menu-title">burgerBONANZA</span> orders
+      </h1>
 
       <div className="grid-x grid-margin-x">
         <div className="cell medium-6 callout">
-          <h3 className="text-center">Incomplete Orders ({orders.incomplete.length})</h3>
-          <div className="callout alert" id="incomplete-order-list">
+          <h3 className="text-center">Incomplete ({orders.incomplete.length})</h3>
+          <div className="callout incomplete-order-list" id="incomplete-order-list">
             {incompleteOrderList}
           </div>
         </div>
 
         <div className="cell medium-6 callout">
-          <h3 className="text-center">Complete Orders ({orders.complete.length})</h3>
-          <div className="callout primary" id="complete-order-list">
+          <h3 className="text-center">Complete ({orders.complete.length})</h3>
+          <div className="callout complete-order-list" id="complete-order-list">
             {completeOrderList}
           </div>
         </div>
