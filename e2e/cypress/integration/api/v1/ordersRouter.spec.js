@@ -95,6 +95,16 @@ describe("ordersRouter", () => {
           (response) => {
             expect(response.body.order).to.have.property("name", orderJson.name);
             expect(response.body.order.burgers.length).to.equal(orderJson.burgers.length);
+
+            expect(response.body.order.burgers[0].type).to.equal(orderJson.burgers[0].type);
+            expect(response.body.order.burgers[0].isGlutenFree).to.equal(
+              orderJson.burgers[0].isGlutenFree
+            );
+
+            expect(response.body.order.burgers[1].type).to.equal(orderJson.burgers[1].type);
+            expect(response.body.order.burgers[1].isGlutenFree).to.equal(
+              orderJson.burgers[1].isGlutenFree
+            );
           }
         );
       });
