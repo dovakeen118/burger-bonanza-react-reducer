@@ -14,10 +14,10 @@ describe("As a user adding a new burger order", () => {
       visitOrderPage();
       cy.get("form").within(() => {
         cy.findByLabelText("Your name").type("Test User");
-        cy.findByLabelText("Type of Burger").select("medium");
+        cy.findByLabelText("Type of burger").select("medium");
         cy.findByLabelText("cheese").check();
         cy.findByLabelText("pickles").check();
-        cy.findByLabelText("Hawaiian Roll").check();
+        cy.findByLabelText("Hawaiian roll").check();
         cy.findByLabelText("Side").select("fries");
         cy.contains("Add burger").click();
       });
@@ -41,14 +41,14 @@ describe("As a user adding a new burger order", () => {
       visitOrderPage();
       cy.get("form").within(() => {
         cy.findByLabelText("Your name").type("Test User");
-        cy.findByLabelText("Type of Burger").select("medium");
+        cy.findByLabelText("Type of burger").select("medium");
         cy.findByLabelText("Hawaiian Roll").check();
         cy.findByLabelText("Side").select("fries");
         cy.contains("Add burger").click();
       });
       cy.get("form").within(() => {
-        cy.findByLabelText("Type of Burger").select("chicken");
-        cy.findByLabelText("Gluten-Free Roll").check();
+        cy.findByLabelText("Type of burger").select("chicken");
+        cy.findByLabelText("Gluten-Free roll").check();
         cy.findByLabelText("Side").select("salad");
         cy.contains("Add burger").click();
       });

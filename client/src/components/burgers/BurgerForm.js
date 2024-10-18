@@ -88,7 +88,7 @@ const BurgerForm = (props) => {
     <div className="cell medium-6 callout burger-form-container">
       <h3 className="burger-form-title">Build your burger</h3>
       <form className="callout burger-form">
-        <label htmlFor="name">
+        <label htmlFor="name" className="form-label">
           Your name
           <FormError error={burgerErrors.name} name="name" />
           <input
@@ -100,8 +100,8 @@ const BurgerForm = (props) => {
           />
         </label>
 
-        <label htmlFor="type">
-          Type of Burger
+        <label htmlFor="type" className="form-label">
+          Type of burger
           <FormError error={burgerErrors.type} name="type" />
           <select id="type" name="type" value={burger.type} onChange={handleChange}>
             <OptionCollection options={burgerTypes} />
@@ -110,14 +110,14 @@ const BurgerForm = (props) => {
 
         <div className="grid-x grid-margin-x">
           <div className="cell small-6">
-            <label>
+            <label className="form-label">
               Toppings
               {toppingOptions}
             </label>
           </div>
 
           <div className="cell small-6">
-            <label>Type of Roll</label>
+            <label className="form-label">Type of roll</label>
             <FormError error={burgerErrors.isGlutenFree} name="isGlutenFree" />
             <label htmlFor="hawaiian">
               <input
@@ -128,7 +128,7 @@ const BurgerForm = (props) => {
                 checked={burger.isGlutenFree === "false"}
                 onChange={handleChange}
               />
-              Hawaiian Roll
+              Hawaiian roll
             </label>
             <label htmlFor="gluten-free">
               <input
@@ -139,12 +139,12 @@ const BurgerForm = (props) => {
                 checked={burger.isGlutenFree === "true"}
                 onChange={handleChange}
               />
-              Gluten-Free Roll
+              Gluten-Free roll
             </label>
           </div>
         </div>
 
-        <label htmlFor="side">
+        <label htmlFor="side" className="form-label">
           Side
           <FormError error={burgerErrors.side} name="side" />
           <select id="side" name="side" value={burger.side} onChange={handleChange}>
