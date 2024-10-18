@@ -22,7 +22,7 @@ describe("As a user adding a new burger order", () => {
         cy.contains("Add burger").click();
       });
 
-      cy.contains("Order Summary for Test User");
+      cy.contains("Order summary for Test User");
       cy.get("form")
         .eq(1)
         .within(() => {
@@ -65,7 +65,7 @@ describe("As a user adding a new burger order", () => {
           cy.contains("Side: salad");
           cy.root().submit();
         });
-      cy.get(".success").contains("Your order has been placed!");
+      cy.get(".order-confirmation").contains("Your order has been placed!");
     });
   });
 

@@ -38,9 +38,13 @@ const OrderDetail = (props) => {
     </button>
   );
 
+  const orderListBackground =
+    order.status === "fulfilled" ? "complete-order-list" : "incomplete-order-list";
+  const orderBackground = order.status === "fulfilled" ? "complete-order" : "incomplete-order";
+
   const orderBurgers = order.burgers.map((burger) => {
     return (
-      <div className="callout" key={burger.id}>
+      <div className={`callout ${orderBackground}`} key={burger.id}>
         <p>
           <strong>Type:</strong> {burger.type}
         </p>
@@ -57,11 +61,11 @@ const OrderDetail = (props) => {
     );
   });
 
-  const calloutBackground = order.status === "fulfilled" ? "primary" : "alert";
-
   return (
     <div className="grid-container">
-      <h1 className="text-center">Order for {order.name}</h1>
+      <h1 className="text-center">
+        Order #{order.id} for {order.name}
+      </h1>
       <div className="grid-x grid-x-margin">
         {order.status === "fulfilled" ? (
           <h4 className="callout success">Fulfilled</h4>
@@ -79,7 +83,7 @@ const OrderDetail = (props) => {
         )}
       </div>
 
-      <div className={`callout ${calloutBackground}`} id="burger-list">
+      <div className={`callout ${orderListBackground}`} id="burger-list">
         {orderBurgers}
       </div>
     </div>

@@ -15,14 +15,14 @@ const OrderSummaryForm = (props) => {
   return (
     <div className="cell medium-6 callout">
       <h3 className="text-center">
-        {props.order.name ? `Order Summary for ${props.order.name}` : "Order Summary"}
+        {props.order.name ? `Order summary for ${props.order.name}` : "Order summary"}
       </h3>
       {props.order.burgers.length > 0 ? (
         <form onSubmit={submitOrder}>
-          <div className="callout secondary">{summary}</div>
+          <div className="callout order-summary-list">{summary}</div>
 
           <div className="button-group align-center">
-            <input type="submit" value="Submit order" className="button" />
+            <input type="submit" value="Submit order" className="button button-submit" />
           </div>
         </form>
       ) : (

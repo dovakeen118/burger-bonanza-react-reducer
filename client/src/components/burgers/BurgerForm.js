@@ -85,9 +85,9 @@ const BurgerForm = (props) => {
   });
 
   return (
-    <div className="cell medium-6 callout">
-      <h3 className="text-center">Burger Order</h3>
-      <form className="callout primary">
+    <div className="cell medium-6 callout burger-form-container">
+      <h3 className="burger-form-title">Build your burger</h3>
+      <form className="callout burger-form">
         <label htmlFor="name">
           Your name
           <FormError error={burgerErrors.name} name="name" />
@@ -152,11 +152,11 @@ const BurgerForm = (props) => {
           </select>
         </label>
 
-        <div className="button-group align-center">
+        <div className="button-group-center">
           <button type="button" onClick={addBurger} className="button">
             Add burger
           </button>
-          <button type="button" onClick={clearForm} className="button alert">
+          <button type="button" onClick={clearForm} className="button button-secondary">
             Reset burger
           </button>
         </div>

@@ -6,7 +6,7 @@ const BurgerTile = (props) => {
   });
 
   return (
-    <div className="callout">
+    <div className="callout order-summary">
       <p>Type: {props.type}</p>
       {chosenToppings.length > 0 ? (
         <>
