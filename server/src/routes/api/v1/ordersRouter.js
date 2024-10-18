@@ -42,7 +42,9 @@ ordersRouter.post("/", async (req, res) => {
         });
         const toppings =
           typeof burger.toppings !== "string" ? burger.toppings.join(", ") : burger.toppings;
-        await order.$relatedQuery("burgers", trx).insert({ ...cleanedBurger, toppings });
+        await order
+          .$relatedQuery("burgers", trx)
+          .insert({ ...cleanedBurger, toppings, isGlutenFree: burger.isGlutenFree });
       }
       return order;
     });

@@ -24,7 +24,8 @@ describe("As a user viewing details about an Order", () => {
     cy.get("#burger-list > :nth-child(1)").contains(
       orderJson.burgers[0].isGlutenFree ? "gluten-free" : "Hawaiian"
     );
-    cy.get("#burger-list > :nth-child(1)").contains(orderJson.burgers[0].toppings);
+    cy.get("#burger-list > :nth-child(1)").contains(orderJson.burgers[0].toppings[0]);
+    cy.get("#burger-list > :nth-child(1)").contains(orderJson.burgers[0].toppings[1]);
     cy.get("#burger-list > :nth-child(1)").contains(orderJson.burgers[0].side);
 
     cy.get("#burger-list > :nth-child(2)").contains(orderJson.burgers[1].type);
@@ -35,7 +36,7 @@ describe("As a user viewing details about an Order", () => {
   });
 
   it("should display whether the order has been completed", () => {
-    cy.contains("Complete Order").click();
+    cy.contains("Complete order").click();
     cy.get("h4").contains("Fulfilled");
   });
 });

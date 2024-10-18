@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import BurgerTile from "../burgers/BurgerTile";
+
 import getOrder from "../../apiClient/getOrder";
 import patchOrder from "../../apiClient/patchOrder";
 
@@ -32,33 +34,11 @@ const OrderDetail = (props) => {
     setOrder(updatedOrder);
   };
 
-  const completeButton = (
-    <button type="button" className="button" id="complete-button" onClick={handleCompleteOrder}>
-      Complete Order
-    </button>
-  );
-
   const orderListBackground =
     order.status === "fulfilled" ? "complete-order-list" : "incomplete-order-list";
-  const orderBackground = order.status === "fulfilled" ? "complete-order" : "incomplete-order";
 
   const orderBurgers = order.burgers.map((burger) => {
-    return (
-      <div className={`callout ${orderBackground}`} key={burger.id}>
-        <p>
-          <strong>Type:</strong> {burger.type}
-        </p>
-        <p>
-          <strong>Roll:</strong> {burger.isGlutenFree ? "gluten-free" : "Hawaiian"}
-        </p>
-        <p>
-          <strong>Toppings:</strong> {burger.toppings}
-        </p>
-        <p>
-          <strong>Side:</strong> {burger.side}
-        </p>
-      </div>
-    );
+    return <BurgerTile key={burger.id} {...burger} status={order.status} />;
   });
 
   return (
@@ -66,25 +46,32 @@ const OrderDetail = (props) => {
       <h1 className="text-center">
         Order #{order.id} for {order.name}
       </h1>
-      <div className="grid-x grid-x-margin">
+      <div className="callout">
         {order.status === "fulfilled" ? (
           <h4 className="callout success">Fulfilled</h4>
         ) : (
-          <>
-            <p className="cell">
-              <strong>Currently pending...</strong>
+          <div className="grid-x grid-margin-x">
+            <p className="cell small-10">
+              <strong>Currently pending ... </strong>
               {timeDiff.days ? `${timeDiff.days} days,` : null}{" "}
               {timeDiff.hours ? `${timeDiff.hours} hours,` : null}{" "}
               {timeDiff.mins ? `${timeDiff.mins} minutes,` : null}{" "}
               {timeDiff.secs ? `${timeDiff.secs} seconds ago` : null}
             </p>
-            {completeButton}
-          </>
+            <button
+              type="button"
+              className="button button-submit cell small-2"
+              id="complete-button"
+              onClick={handleCompleteOrder}
+            >
+              Complete order
+            </button>
+          </div>
         )}
-      </div>
 
-      <div className={`callout ${orderListBackground}`} id="burger-list">
-        {orderBurgers}
+        <div className={`callout ${orderListBackground}`} id="burger-list">
+          {orderBurgers}
+        </div>
       </div>
     </div>
   );

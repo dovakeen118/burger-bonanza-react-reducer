@@ -1,21 +1,32 @@
 import React from "react";
 
-const BurgerTile = (props) => {
-  const chosenToppings = props.toppings.map((topping) => {
+const BurgerTile = ({ type, toppings, isGlutenFree, side, status }) => {
+  const burgerToppings = typeof toppings === "string" ? toppings.split(", ") : toppings;
+  const chosenToppings = burgerToppings.map((topping) => {
     return <li key={topping}>{topping}</li>;
   });
 
+  const orderBackground = status === "fulfilled" || !status ? "complete-order" : "incomplete-order";
   return (
-    <div className="callout order-summary">
-      <p>Type: {props.type}</p>
+    <div className={`grid-x grid-margin-x callout ${orderBackground}`}>
+      <div className="cell small-6">
+        <p>
+          <span className="order-summary-header">Type:</span> {type}
+        </p>
+        <p>
+          <span className="order-summary-header">Roll:</span>{" "}
+          {isGlutenFree === "true" || isGlutenFree === true ? "gluten-free" : "Hawaiian"}
+        </p>
+        <p>
+          <span className="order-summary-header">Side:</span> {side}
+        </p>
+      </div>
       {chosenToppings.length > 0 ? (
-        <>
-          <p>Toppings:</p>
+        <div className="cell small-6">
+          <p className="order-summary-header">Toppings:</p>
           <ul>{chosenToppings}</ul>
-        </>
+        </div>
       ) : null}
-      <p>Roll: {props.isGlutenFree === "true" ? "gluten-free" : "Hawaiian"}</p>
-      <p>Side: {props.side}</p>
     </div>
   );
 };
