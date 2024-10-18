@@ -39,6 +39,7 @@ ordersRouter.post("/", async (req, res) => {
         const cleanedBurger = cleanUserInput({
           type: burger.type,
           side: burger.side,
+          isGlutenFree: burger.isGlutenFree,
         });
         const toppings =
           typeof burger.toppings !== "string" ? burger.toppings.join(", ") : burger.toppings;

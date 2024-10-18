@@ -42,7 +42,7 @@ describe("As a user adding a new burger order", () => {
       cy.get("form").within(() => {
         cy.findByLabelText("Your name").type("Test User");
         cy.findByLabelText("Type of burger").select("medium");
-        cy.findByLabelText("Hawaiian Roll").check();
+        cy.findByLabelText("Hawaiian roll").check();
         cy.findByLabelText("Side").select("fries");
         cy.contains("Add burger").click();
       });
